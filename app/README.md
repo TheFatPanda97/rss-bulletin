@@ -1,4 +1,4 @@
-# rss-bulletin
+# app
 
 ## Project setup
 ```
