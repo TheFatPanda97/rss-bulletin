@@ -1,40 +1,75 @@
 <template>
-	<v-app>
-		<v-app-bar app color="primary" dark>
-			<div class="d-flex align-center">
-				<v-img
-					alt="Vuetify Logo"
-					class="shrink mr-2"
-					contain
-					src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
-					transition="scale-transition"
-					width="40"
-				/>
+    <v-app>
+        <v-app-bar app color="#00204E" dark>
+            <div
+                class="d-flex align-center"
+                @click="$router.push({ name: 'Home' })"
+                style="cursor: pointer"
+            >
+                <v-img
+                    alt="RSS Bulletin Logo"
+                    class="mr-2"
+                    contain
+                    src="./assets/toolbar-logo.png"
+                    transition="scale-transition"
+                    width="40"
+                />
 
-				<v-img
-					alt="Vuetify Name"
-					class="shrink mt-1 hidden-sm-and-down"
-					contain
-					min-width="100"
-					src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
-					width="100"
-				/>
-			</div>
+                <v-img
+                    alt="Vuetify Name"
+                    contain
+                    min-width="100"
+                    src="./assets/toolbar-text.png"
+                    width="100"
+                />
+            </div>
 
-			<v-spacer></v-spacer>
+            <template v-slot:extension v-if="this.$router.currentRoute.path === '/'">
+                <v-tabs v-model="tab" align-with-title>
+                    <v-tab>All</v-tab>
+                    <v-menu open-on-hover bottom offset-y>
+                        <template v-slot:activator="{ on, attrs }">
+                            <v-tab v-bind="attrs" v-on="on">
+                                Dropdown
+                            </v-tab>
+                        </template>
 
-			<v-btn
-				href="https://github.com/vuetifyjs/vuetify/releases/latest"
-				target="_blank"
-				text
-			>
-				<span class="mr-2">Latest Release</span>
-				<v-icon>mdi-open-in-new</v-icon>
-			</v-btn>
-		</v-app-bar>
+                        <v-list>
+                            <v-list-item>
+                                <v-btn>Shawn</v-btn>
+                            </v-list-item>
+                        </v-list>
+                    </v-menu>
+                </v-tabs>
+            </template>
 
-		<v-main>
-			<router-view></router-view>
-		</v-main>
-	</v-app>
+            <v-text-field
+                class="rounded-lg ml-4"
+                flat
+                hide-details
+                hint="Search"
+                prepend-inner-icon="mdi-magnify"
+                solo-inverted
+            >
+            </v-text-field>
+            <v-spacer></v-spacer>
+            <v-btn>Hello</v-btn>
+            <v-btn>Hello</v-btn>
+            <v-btn>Hello</v-btn>
+        </v-app-bar>
+
+        <v-main>
+            <router-view></router-view>
+        </v-main>
+    </v-app>
 </template>
+
+<script>
+export default {
+    data() {
+        return {
+            tab: 0,
+        };
+    },
+};
+</script>

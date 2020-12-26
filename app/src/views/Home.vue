@@ -1,38 +1,28 @@
 <template>
     <div>
-        <section id="firebaseui-auth-container"></section>
-        <p>{{ secret }}</p>
-        <button @click="generate()">generate hash</button>
+        <p>{{ $store.state.count }}</p>
+        <v-btn @click="$store.commit('increment')">
+            increment
+        </v-btn>
+        <v-btn @click="addDocument">add new document</v-btn>
+        <v-row>
+            <event-card></event-card>
+        </v-row>
     </div>
 </template>
-
 <script>
-import firebase from "firebase/app";
-import * as firebaseui from "firebaseui";
-import "firebase/auth";
-import "firebaseui/dist/firebaseui.css";
-import bcrypt from "bcryptjs";
+import { db } from "../db";
+import EventCard from "../components/EventCard";
 
 export default {
-    data() {
-        return {
-            secret: "",
-        };
-    },
-    mounted() {
-        let ui = new firebaseui.auth.AuthUI(firebase.auth());
-        ui.start("#firebaseui-auth-container", {
-            signInOptions: [firebase.auth.EmailAuthProvider.PROVIDER_ID],
-            signInSuccessUrl: "/about",
-        });
+    components: {
+        "event-card": EventCard,
     },
     methods: {
-        generate() {
-            bcrypt.hash("12345", 10, (err, hash) => {
-                this.secret = hash;
-                bcrypt.compare("12345", hash, function(err, res) {
-                    console.log(res);
-                });
+        addDocument() {
+            db.collection("workshops").add({
+                name: "Paris",
+                slogan: "La Ville lumière",
             });
         },
     },
