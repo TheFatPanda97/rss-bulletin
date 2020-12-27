@@ -4,6 +4,8 @@ import VueRouter from "vue-router";
 import Home from "../views/Home";
 import About from "../views/About";
 import Event from "../views/Event";
+import store from "../store/index";
+// import Test from "../views/Loading";
 // import firebase from "firebase/app";
 // import "firebase/auth";
 
@@ -22,7 +24,19 @@ const routes = [
     },
     {
         path: "/event/:id",
-        component: Event,
+        component: Event, 
+        beforeEnter: async (to, from, next) => {
+            if (store.state.general.length === 0) {
+                await store.dispatch("bindGeneral");
+            }
+
+            let tempEvent = store.state.general.find(
+                (event) => event.id === to.params.id
+            );
+
+            if (tempEvent) next();
+            else next({ name: "Home" });
+        },
     },
     {
         path: "*",

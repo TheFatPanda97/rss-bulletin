@@ -1,6 +1,6 @@
 <template>
-    <v-app>
-        <v-app-bar app color="#00204E" dark>
+    <v-app style="background-color: #F8F7FA">
+        <v-app-bar app color="#00204E" dark flat>
             <div
                 class="d-flex align-center"
                 @click="$router.push({ name: 'Home' })"
@@ -8,7 +8,7 @@
             >
                 <v-img
                     alt="RSS Bulletin Logo"
-                    class="mr-2"
+                    class="mx-2"
                     contain
                     src="./assets/toolbar-logo.png"
                     transition="scale-transition"
@@ -16,46 +16,39 @@
                 />
 
                 <v-img
+                    v-if="notMobile"
                     alt="Vuetify Name"
                     contain
                     min-width="100"
                     src="./assets/toolbar-text.png"
                     width="100"
+                    class="mr-2"
                 />
             </div>
-
-            <template v-slot:extension v-if="this.$router.currentRoute.path === '/'">
-                <v-tabs v-model="tab" align-with-title>
-                    <v-tab>All</v-tab>
-                    <v-menu open-on-hover bottom offset-y>
-                        <template v-slot:activator="{ on, attrs }">
-                            <v-tab v-bind="attrs" v-on="on">
-                                Dropdown
-                            </v-tab>
-                        </template>
-
-                        <v-list>
-                            <v-list-item>
-                                <v-btn>Shawn</v-btn>
-                            </v-list-item>
-                        </v-list>
-                    </v-menu>
-                </v-tabs>
-            </template>
-
             <v-text-field
-                class="rounded-lg ml-4"
+                class="rounded-lg ml-4 mr-4"
                 flat
                 hide-details
-                hint="Search"
+                label="Search"
                 prepend-inner-icon="mdi-magnify"
                 solo-inverted
+                single-line
+                clearable
             >
             </v-text-field>
-            <v-spacer></v-spacer>
-            <v-btn>Hello</v-btn>
-            <v-btn>Hello</v-btn>
-            <v-btn>Hello</v-btn>
+            <v-btn
+                v-if="notMobile"
+                class="text-capitalize"
+                color="#00204E"
+                elevation="0"
+            >
+                <v-icon left dark> mdi-heart </v-icon>
+                Saved Events
+            </v-btn>
+            <v-btn class="text-capitalize" color="#00204E" elevation="0">
+                <v-icon left dark> mdi-account-circle </v-icon>
+                Sign In
+            </v-btn>
         </v-app-bar>
 
         <v-main>
@@ -70,6 +63,16 @@ export default {
         return {
             tab: 0,
         };
+    },
+    computed: {
+        notMobile() {
+            switch (this.$vuetify.breakpoint.name) {
+                case "xs":
+                    return false;
+                default:
+                    return true;
+            }
+        },
     },
 };
 </script>
