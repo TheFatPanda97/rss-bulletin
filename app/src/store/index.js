@@ -10,22 +10,22 @@ const store = new Vuex.Store({
         general: [],
         amu: [],
         workshop: [],
-        counter: 0,
     },
 
     mutations: {
         ...vuexfireMutations,
-        increment(state) {
-            state.counter++;
-        },
     },
 
     actions: {
         bindGeneral: firestoreAction(({ bindFirestoreRef }) => {
-            // return the promise returned by `bindFirestoreRef`
             return bindFirestoreRef("general", db.collection("general"));
         }),
-        
+        bindAMU: firestoreAction(({ bindFirestoreRef }) => {
+            return bindFirestoreRef("amu", db.collection("amu"));
+        }),
+        bindWorkshop: firestoreAction(({ bindFirestoreRef }) => {
+            return bindFirestoreRef("workshop", db.collection("workshop"));
+        }),
     },
 });
 

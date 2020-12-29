@@ -1,13 +1,10 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-// import Test from "../views/Signin";
+import Login from "../views/Login";
 import Home from "../views/Home";
 import About from "../views/About";
 import Event from "../views/Event";
 import store from "../store/index";
-// import Test from "../views/Loading";
-// import firebase from "firebase/app";
-// import "firebase/auth";
 
 Vue.use(VueRouter);
 
@@ -23,9 +20,15 @@ const routes = [
         component: About,
     },
     {
+        path: "/login",
+        name: "Login",
+        component: Login,
+    },
+    {
         path: "/event/:id",
-        component: Event, 
-        beforeEnter: async (to, from, next) => {
+        name: "Event",
+        component: Event,
+        beforeEnter: async (to, _, next) => {
             if (store.state.general.length === 0) {
                 await store.dispatch("bindGeneral");
             }

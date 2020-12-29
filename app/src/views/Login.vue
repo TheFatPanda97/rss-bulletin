@@ -16,7 +16,6 @@ export default {
     },
     beforeCreate() {
         if (localStorage.getItem("onSignIn") === "true") {
-            // This gives you a Google Access Token. You can use it to access the Google API.
             localStorage.setItem("onSignIn", "false");
             this.$router.push({ name: "About" });
         }

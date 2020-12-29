@@ -1,5 +1,7 @@
 <template>
-    <v-app style="background-color: #F8F7FA">
+    <v-app
+        style="background-image: url('https://semester.ly/static/img/splash/grey.png')"
+    >
         <v-app-bar app color="#00204E" dark flat>
             <div
                 class="d-flex align-center"
@@ -36,12 +38,7 @@
                 clearable
             >
             </v-text-field>
-            <v-btn
-                v-if="notMobile"
-                class="text-capitalize"
-                color="#00204E"
-                elevation="0"
-            >
+            <v-btn v-if="notMobile" class="text-capitalize" color="#00204E" elevation="0">
                 <v-icon left dark> mdi-heart </v-icon>
                 Saved Events
             </v-btn>
@@ -50,7 +47,6 @@
                 Sign In
             </v-btn>
         </v-app-bar>
-
         <v-main>
             <router-view></router-view>
         </v-main>
@@ -73,6 +69,6 @@ export default {
                     return true;
             }
         },
-    },
+    }
 };
 </script>
