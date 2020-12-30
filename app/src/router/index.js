@@ -4,7 +4,7 @@ import Login from "../views/Login";
 import Home from "../views/Home";
 import About from "../views/About";
 import Event from "../views/Event";
-import store from "../store/index";
+// import store from "../store/index";
 
 Vue.use(VueRouter);
 
@@ -25,20 +25,27 @@ const routes = [
         component: Login,
     },
     {
-        path: "/event/:id",
+        path: "/event/:category/:id",
         name: "Event",
         component: Event,
         beforeEnter: async (to, _, next) => {
-            if (store.state.general.length === 0) {
-                await store.dispatch("bindGeneral");
-            }
 
-            let tempEvent = store.state.general.find(
-                (event) => event.id === to.params.id
-            );
+            // if (store.state.general.length === 0) {
+            //     await store.dispatch("bindGeneral");
+            // }
 
-            if (tempEvent) next();
-            else next({ name: "Home" });
+            // console.log("ello")
+
+            // let tempEvent = store.state.general.find(
+            //     (event) => event.id === to.params.id
+            // );
+
+
+            // // next({ name: "Home" });
+
+            // if (tempEvent) next();
+            // else next({ name: "Home" });
+            next()
         },
     },
     {

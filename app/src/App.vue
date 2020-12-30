@@ -2,7 +2,7 @@
     <v-app
         style="background-image: url('https://semester.ly/static/img/splash/grey.png')"
     >
-        <v-app-bar app color="#00204E" dark flat>
+        <v-app-bar app color="#00204E" dark flat fixed>
             <div
                 class="d-flex align-center"
                 @click="$router.push({ name: 'Home' })"
@@ -46,6 +46,19 @@
                 <v-icon left dark> mdi-account-circle </v-icon>
                 Sign In
             </v-btn>
+            <template v-slot:extension v-if="$route.path === '/'">
+                <v-tabs
+                    v-model="tab"
+                    class="position: fixed; top:0"
+                    align-with-title
+                    dark
+                    background-color="#00204E"
+                >
+                    <v-tab>General</v-tab>
+                    <v-tab>AMU</v-tab>
+                    <v-tab>Workshop</v-tab>
+                </v-tabs>
+            </template>
         </v-app-bar>
         <v-main>
             <router-view></router-view>
@@ -60,6 +73,10 @@ export default {
             tab: 0,
         };
     },
+    async mounted() {
+        await this.$store.dispatch("bindGeneral");
+        this.$store.state.currEventCards = this.$store.state.general;
+    },
     computed: {
         notMobile() {
             switch (this.$vuetify.breakpoint.name) {
@@ -69,6 +86,30 @@ export default {
                     return true;
             }
         },
-    }
+    },
+    watch: {
+        async tab(currTab) {
+            switch (currTab) {
+                case 0:
+                    if (this.$store.state.general.length === 0) {
+                        await this.$store.dispatch("bindGeneral");
+                    }
+                    this.$store.state.currEventCards = this.$store.state.general;
+                    break;
+                case 1:
+                    if (this.$store.state.amu.length === 0) {
+                        await this.$store.dispatch("bindAMU");
+                    }
+                    this.$store.state.currEventCards = this.$store.state.amu;
+                    break;
+                case 2:
+                    if (this.$store.state.workshop.length === 0) {
+                        await this.$store.dispatch("bindWorkshop");
+                    }
+                    this.$store.state.currEventCards = this.$store.state.workshop;
+                    break;
+            }
+        },
+    },
 };
 </script>

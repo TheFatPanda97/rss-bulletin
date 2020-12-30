@@ -1,9 +1,9 @@
 <template>
     <v-container>
-        <v-card>
+        <v-card v-if="eventDetail">
             <v-container class="pt-0">
                 <v-row style="background-color: #FCFBFB">
-                    <v-col class="pa-0">
+                    <v-col class="pa-0" cols="12" md="8">
                         <v-img
                             :src="
                                 eventDetail.imgSrc
@@ -11,7 +11,7 @@
                                     : '../assets/load.png'
                             "
                             lazy-src="../assets/load.png"
-                            max-height="400"
+                            height="350"
                         >
                             <template v-slot:placeholder>
                                 <v-row
@@ -27,12 +27,7 @@
                             </template>
                         </v-img>
                     </v-col>
-                    <v-col
-                        cols="12"
-                        sm="12"
-                        md="4"
-                        style="position: relative; min-height:250px"
-                    >
+                    <v-col cols="12" md="4" style="position: relative; min-height:250px">
                         <v-col>
                             <p>
                                 {{ eventDetail.date }}
@@ -56,16 +51,48 @@
                 </v-row>
             </v-container>
         </v-card>
+        <p v-else>loading</p>
     </v-container>
 </template>
 <script>
 export default {
-    data() {
-        return {
-            eventDetail: this.$store.state.general.find(
+    async created() {
+        let tempEvent;
+        switch (this.$route.params.category) {
+            case "general":
+                if (this.$store.state.general.length === 0) {
+                    await this.$store.dispatch("bindGeneral");
+                }
+
+                tempEvent = this.$store.state.general.find(
+                    (event) => event.id === this.$route.params.id
+                );
+
+                if (!tempEvent) this.$router.push({ name: "Home" });
+
+                break;
+            default:
+                this.$router.push({ name: "Home" });
+                break;
+        }
+    },
+    computed: {
+        eventDetail() {
+            return this.$store.state.general.find(
                 (event) => event.id === this.$route.params.id
-            ),
-        };
+            );
+        },
+    },
+    watch: {
+        "$store.state.general": function (newVal) {
+            if (newVal.length != 0) {
+                let tempEvent = this.$store.state.general.find(
+                    (event) => event.id === this.$route.params.id
+                );
+
+                if (!tempEvent) this.$router.push({ name: "Home" });
+            }
+        },
     },
 };
 </script>

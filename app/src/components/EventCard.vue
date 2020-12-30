@@ -41,10 +41,14 @@ export default {
         date: String,
         time: String,
         id: String,
+        category: String,
     },
     methods: {
         goToPage() {
-            this.$router.push({ name: "Event", params: { id: this.id } });
+            this.$router.push({
+                name: "Event",
+                params: { id: this.id, category: this.category },
+            });
         },
     },
 };
