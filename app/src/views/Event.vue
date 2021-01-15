@@ -38,7 +38,7 @@
 							<p>Location: {{ eventDetail.location }}</p>
 						</v-col>
 						<v-col style="position: absolute; bottom: 0; left: 0">
-							<v-btn block dark color="#0E8548" @click="goToHome">
+							<v-btn block dark color="#0E8548" @click="snackbar = true">
 								Save
 							</v-btn>
 						</v-col>
