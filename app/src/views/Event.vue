@@ -38,7 +38,7 @@
 							<p>Location: {{ eventDetail.location }}</p>
 						</v-col>
 						<v-col style="position: absolute; bottom: 0; left: 0">
-							<v-btn block dark color="#0E8548" @click="test">
+							<v-btn block dark color="#0E8548" @click="goToHome">
 								Save
 							</v-btn>
 						</v-col>
@@ -74,46 +74,69 @@ export default {
 		};
 	},
 	methods: {
-		test() {
-			this.snackbar = true;
+		goToHome() {
+			this.$router.push({ name: "Home" });
 		},
 	},
-	async created() {
-		let tempEvent;
+	created() {
 		switch (this.$route.params.category) {
 			case "general":
 				if (this.$store.state.general.length === 0) {
-					await this.$store.dispatch("bindGeneral");
+					this.$store.dispatch("bindGeneral");
 				}
-
-				tempEvent = this.$store.state.general.find(
-					(event) => event.id === this.$route.params.id
-				);
-
-				if (!tempEvent) this.$router.push({ name: "Home" });
-
+				break;
+			case "amu":
+				if (this.$store.state.amu.length === 0) {
+					this.$store.dispatch("bindAMU");
+				}
+				break;
+			case "workshop":
+				if (this.$store.state.workshop.length === 0) {
+					this.$store.dispatch("bindWorkshop");
+				}
 				break;
 			default:
-				this.$router.push({ name: "Home" });
+				this.goToHome();
 				break;
 		}
 	},
 	computed: {
 		eventDetail() {
-			return this.$store.state.general.find(
-				(event) => event.id === this.$route.params.id
-			);
-		},
-	},
-	watch: {
-		"$store.state.general": function(newVal) {
-			if (newVal.length != 0) {
-				let tempEvent = this.$store.state.general.find(
-					(event) => event.id === this.$route.params.id
-				);
-
-				if (!tempEvent) this.$router.push({ name: "Home" });
+			let tempEvent;
+			switch (this.$route.params.category) {
+				case "general":
+					if (this.$store.state.general.length === 0) {
+						return undefined;
+					} else {
+						tempEvent = this.$store.state.general.find(
+							(event) => event.id === this.$route.params.id
+						);
+					}
+					break;
+				case "amu":
+					if (this.$store.state.amu.length === 0) {
+						return undefined;
+					} else {
+						tempEvent = this.$store.state.amu.find(
+							(event) => event.id === this.$route.params.id
+						);
+					}
+					break;
+				case "workshop":
+					if (this.$store.state.workshop.length === 0) {
+						return undefined;
+					} else {
+						tempEvent = this.$store.state.workshop.find(
+							(event) => event.id === this.$route.params.id
+						);
+					}
+					break;
+				default:
+					this.goToHome();
+					break;
 			}
+
+			return tempEvent ? tempEvent : this.goToHome();
 		},
 	},
 };
