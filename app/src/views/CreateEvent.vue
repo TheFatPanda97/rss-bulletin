@@ -1,7 +1,7 @@
 <template>
 	<v-container>
 		<v-card class="pa-5">
-			<h1 style="text-align: center">Create a Event</h1>
+			<h1 style="text-align: center">Create an Event</h1>
 			<v-form ref="form" v-model="valid" lazy-validation>
 				<v-text-field
 					v-model="title"
@@ -19,7 +19,7 @@
 
 				<v-text-field
 					v-model="location"
-					label="Location"
+					label="Location/Link"
 					:rules="[(v) => !!v || 'Location is required']"
 				></v-text-field>
 
