@@ -30,7 +30,8 @@
 
 				<div @click="goToPage">
 					<v-card-subtitle class="font-weight-bold pb-0" style="color: #5B7CF0">
-						{{ date }} {{ time }}
+						{{ formatDate(startDate, startTime) }} -
+						{{ formatDate(endDate, endTime) }}
 					</v-card-subtitle>
 					<v-card-title class="mb-2 pt-1" style="word-break: normal">
 						{{ title }}
@@ -50,6 +51,7 @@
 	</div>
 </template>
 <script>
+import { DateTime } from "luxon";
 export default {
 	data() {
 		return {
@@ -59,8 +61,10 @@ export default {
 	props: {
 		title: String,
 		imgSrc: String,
-		date: String,
-		time: String,
+		startDate: String,
+		endDate: String,
+		startTime: String,
+		endTime: String,
 		id: String,
 		category: String,
 	},
@@ -74,14 +78,9 @@ export default {
 		test() {
 			this.snackbar = true;
 		},
+		formatDate(date, time) {
+			return DateTime.fromISO(`${date}T${time}`).toFormat("LLL t");
+		},
 	},
 };
 </script>
-<style scoped>
-.truncate {
-	/* width: 100px !important; */
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
-}
-</style>

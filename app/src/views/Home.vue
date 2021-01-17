@@ -11,8 +11,10 @@
 			>
 				<event-card
 					:title="eventCard.title"
-					:date="eventCard.date"
-					:time="eventCard.time"
+					:startDate="eventCard.startDate"
+					:endDate="eventCard.endDate"
+					:startTime="eventCard.startTime"
+					:endTime="eventCard.endTime"
 					:imgSrc="eventCard.imgSrc"
 					:id="eventCard.id"
 					:category="eventCard.category"
