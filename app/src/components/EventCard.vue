@@ -79,7 +79,7 @@ export default {
 			this.snackbar = true;
 		},
 		formatDate(date, time) {
-			return DateTime.fromISO(`${date}T${time}`).toFormat("LLL t");
+			return DateTime.fromISO(`${date}T${time}`).toFormat("LLL dd, t");
 		},
 	},
 };

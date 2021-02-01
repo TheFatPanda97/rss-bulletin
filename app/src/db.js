@@ -2,17 +2,16 @@ import firebase from "firebase/app";
 import "firebase/firestore";
 import "firebase/storage";
 
-
 // Get a Firestore instance
 const fb = firebase.initializeApp({
-    apiKey: "AIzaSyAoXss-NMk_83OQ9bpPjr8vV1A-ZeHQ5H8",
-    authDomain: "rss-bulletin.firebaseapp.com",
-    databaseURL: "https://rss-bulletin-default-rtdb.firebaseio.com",
-    projectId: "rss-bulletin",
-    storageBucket: "rss-bulletin.appspot.com",
-    messagingSenderId: "503151740867",
-    appId: "1:503151740867:web:5d8fc9bff9da9942691f76",
-    measurementId: "G-B8BBHMKYV4",
+	apiKey: "AIzaSyAoXss-NMk_83OQ9bpPjr8vV1A-ZeHQ5H8",
+	authDomain: "rss-bulletin.firebaseapp.com",
+	databaseURL: "https://rss-bulletin-default-rtdb.firebaseio.com",
+	projectId: "rss-bulletin",
+	storageBucket: "rss-bulletin.appspot.com",
+	messagingSenderId: "503151740867",
+	appId: "1:503151740867:web:5d8fc9bff9da9942691f76",
+	measurementId: "G-B8BBHMKYV4",
 });
 
 export const db = fb.firestore();
